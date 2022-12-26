@@ -1,0 +1,15 @@
+<h2>Position Randomiser</h2>
+<!-- <input type="checkbox" id="position" name="position">
+<label for="position"> Randomise Position </label><br><br> -->
+<button id="randomise">Randomise</button>
+<button id="close">Close</button>
+<script>
+
+document.getElementById('randomise').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'randomise' } }, '*')
+}
+document.getElementById('close').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'close' } }, '*')
+}
+
+</script>
