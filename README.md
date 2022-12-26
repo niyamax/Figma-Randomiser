@@ -4,7 +4,7 @@ Follow these steps to get the plugin running on your machine:
 
 ## Prerequisites
 
-1. Download [Node.js][node], which comes with NPM. This will allow you to install TypeScript and other libraries. You can find the download link here: https://nodejs.org/en/download/
+1. Download Node.js., which comes with NPM. This will allow you to install TypeScript and other libraries. You can find the download link here: https://nodejs.org/en/download/
 2. Install TypeScript using the following command: `npm install -g typescript`
 
 ## Install Dependencies
