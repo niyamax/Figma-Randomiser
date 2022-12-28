@@ -1,5 +1,6 @@
 
 figma.showUI(__html__);
+figma.ui.resize(300,200);
 figma.ui.onmessage = msg => {
   if (msg.type === 'randomise') {
     try {
