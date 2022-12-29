@@ -3,16 +3,17 @@
   <div class="type type--xlarge type--medium type--inverse">Randomiser</div>
 <!-- <input type="checkbox" id="position" name="position">
 <label for="position"> Randomise Position </label><br><br> -->
+<div class="switch">
+  <input class="switch__toggle" type="checkbox" id="uniqueId">
+  <label class="switch__label" for="uniqueId">Constraint to Frame</label>
+</div>
 <button class='button button--primary' id="randomise">Randomise</button>
 <!-- <a href="#" target="blank" id="close">Close</a> -->
 </div>
 <script>
-
+var checkBox = document.getElementById("uniqueId");
 document.getElementById('randomise').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'randomise' } }, '*')
-}
-document.getElementById('close').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'close' } }, '*')
+  parent.postMessage({ pluginMessage: { type: 'randomise',  isChecked: checkBox.checked } }, '*')
 }
 </script>
 <style>
@@ -23,15 +24,16 @@ document.getElementById('close').onclick = () => {
     display: grid;
     justify-items: center;
     align-content: center;
-    background-color: #2c2c2c;
+    background-color: #fafafa;
   }
   button:hover {
 			color: #ffffff;
 			background-color: #0E78BD;
 		}
   .type{
-    color: #fafafa;
+    color: #212121;
   }
+
 </style>
 <!-- <style>
   input[type="checkbox"] {
