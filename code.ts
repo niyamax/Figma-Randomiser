@@ -9,6 +9,7 @@ figma.ui.onmessage = (msg) => {
       if (frame.type == "FRAME") {
         const children = frame.children;
         for (const child of children) {
+          //resizeChild(child, frame.width);
           if(isChecked)
             {
               child.x = Math.max(0, Math.min(Math.random() * frame.width, frame.width - child.width));
@@ -19,7 +20,6 @@ figma.ui.onmessage = (msg) => {
               child.x = Math.random() * frame.width;
               child.y = Math.random() * frame.height;
             }
-          //resizeChild(child, frame.width);
         }
         frame.resizeWithoutConstraints(frame.width, frame.height);
       } else {
@@ -56,13 +56,10 @@ figma.ui.onmessage = (msg) => {
       child.type == "VECTOR" ||
       child.type == "WASHI_TAPE"
     ) {
-      const maxSize = Math.min(frameWidth, child.height, child.width);
-      child.resize(Math.min(Math.random() * maxSize, child.width), 
-      Math.min(Math.random() * maxSize, child.height));
-      // child.resize(
-      //   (child.width !=0 ? Math.random() * frameWidth : 0) / 4,
-      //   (child.height !=0 ? Math.random() * frameWidth : 0) / 4
-      // );
+      child.resize(
+        (child.width !=0 ? Math.random() * frameWidth : 0) / 4,
+        (child.height !=0 ? Math.random() * frameWidth : 0) / 4
+      );
     }
   }
 };

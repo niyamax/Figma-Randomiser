@@ -1,90 +1,102 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
+  <style>
+    .switch {
+      align-items: center;
+      cursor: default;
+      display: flex;
+      height: var(--size-medium);
+      position: relative;
+    }
+
+    .header {
+      row-gap: 4px;
+      justify-items: center;
+      display: grid;
+      align-content: center;
+    }
+    .container {
+      width: 100vw;
+      height: 100vh;
+      row-gap: 16px;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      background-color: #2c2c2c;
+    }
+
+    button:hover {
+      color: #ffffff;
+      background-color: #0E78BD;
+    }
+
+    .type {
+      color: #fafafa;
+    }
+
+    .switch__toggle:checked+.switch__label:before {
+      color: #17A1FA;
+      background-color: #17A1FA;
+    }
+
+    .switch__label:before {
+      background-color: #A9A9A9;
+      border: 1px solid #2c2c2c;
+      border-radius: 6px;
+      content: '';
+      display: block;
+      height: 10px;
+      left: 8px;
+      position: absolute;
+      top: 10px;
+      transition: background-color 0 0.2s;
+      width: 22px;
+    }
+
+    .switch__label:after {
+      background-color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      content: '';
+      display: block;
+      height: 10px;
+      left: 8px;
+      position: absolute;
+      top: 10px;
+      transition: transform 0.2s;
+      width: 10px;
+    }
+
+    .switch__label {
+      align-items: center;
+      color: #fafafa;
+      display: flex;
+      font-family: var(--font-stack);
+      font-size: var(--font-size-xsmall);
+      font-weight: var(--font-weight-normal);
+      height: 100%;
+      letter-spacing: var(--font-letter-spacing-pos-xsmall);
+      line-height: var(--font-line-height);
+      margin-left: -22px;
+      padding: 0 var(--size-xsmall) 0 calc(var(--size-xlarge) - 2px);
+      user-select: none;
+      order: 1; 
+    }
+  </style>
+</head>
 <div class="container">
-  <div class="type type--xlarge type--medium type--inverse">Randomiser</div>
-<!-- <input type="checkbox" id="position" name="position">
-<label for="position"> Randomise Position </label><br><br> -->
-<div class="switch">
-  <input class="switch__toggle" type="checkbox" id="uniqueId">
-  <label class="switch__label" for="uniqueId">Constraint to Frame</label>
-</div>
-<button class='button button--primary' id="randomise">Randomise</button>
-<!-- <a href="#" target="blank" id="close">Close</a> -->
+  <div class="header">
+    <div class="type type--large type--medium type--inverse">Randomiser</div>
+  </div>
+  <div class="switch">
+    <input class="switch__toggle" type="checkbox" id="uniqueId">
+    <label class="switch__label type" for="uniqueId">Limit in Frame</label>
+  </div>
+  <button class='button button--primary' id="randomise">Randomise</button>
 </div>
 <script>
-var checkBox = document.getElementById("uniqueId");
-document.getElementById('randomise').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'randomise',  isChecked: checkBox.checked } }, '*')
-}
+  var checkBox = document.getElementById("uniqueId");
+  document.getElementById('randomise').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'randomise', isChecked: checkBox.checked } }, '*')
+  }
 </script>
-<style>
-  .container {
-    width: 100vw;
-    height: 100vh;
-    row-gap: 16px;
-    display: grid;
-    justify-items: center;
-    align-content: center;
-    background-color: #fafafa;
-  }
-  button:hover {
-			color: #ffffff;
-			background-color: #0E78BD;
-		}
-  .type{
-    color: #212121;
-  }
-
-</style>
-<!-- <style>
-  input[type="checkbox"] {
-    display: inline-block;
-    margin: 0 0.5em 0 0;
-    width: 2em;
-    height: 2em;
-    vertical-align: middle;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  label {
-    display: inline-block;
-    margin: 0 0.5em 0 0;
-    font-size: 1em;
-    font-weight: normal;
-    vertical-align: middle;
-  }
-
-  a:link {
-  color: #212121;
-  text-decoration: none;
-}
-.container {
-    width: 100vw;
-    height: 100vh;
-    row-gap: 16px;
-    display: grid;
-    justify-items: center;
-    align-content: center;
-    font-family: 'Poppins', sans-serif;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  button {
-			color: #ffffff;
-			background-color: #2d63c8;
-			font-size: 16px;
-			border: 0px solid #2d63c8;
-			border-radius: 200px;
-			padding: 12px 24px;
-			cursor: pointer
-		}
-		button:hover {
-			color: #ffffff;
-			background-color: #143f94;
-		}
-</style> -->
