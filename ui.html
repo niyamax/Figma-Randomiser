@@ -1,102 +1,274 @@
-<head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
-  <style>
-    .switch {
-      align-items: center;
-      cursor: default;
-      display: flex;
-      height: var(--size-medium);
-      position: relative;
-    }
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
+    <style>
+      :root {
+        /* fonts */
+        --font-plus-jakarta-sans: "Plus Jakarta Sans";
 
-    .header {
-      row-gap: 4px;
-      justify-items: center;
-      display: grid;
-      align-content: center;
-    }
-    .container {
-      width: 100vw;
-      height: 100vh;
-      row-gap: 16px;
-      display: grid;
-      justify-items: center;
-      align-content: center;
-      background-color: #2c2c2c;
-    }
+        /* font sizes */
+        --font-size-base: 14px;
 
-    button:hover {
-      color: #ffffff;
-      background-color: #0E78BD;
-    }
+        /* Colors */
+        --color-gray-100: #fafafa;
+        --gray-6: #f2f2f2;
+        --blue-2: #2d9cdb;
 
-    .type {
-      color: #fafafa;
-    }
+        /* Gaps */
+        --gap-md: 12px;
+      }
 
-    .switch__toggle:checked+.switch__label:before {
-      color: #17A1FA;
-      background-color: #17A1FA;
-    }
+      body {
+        margin: 0;
+        line-height: normal;
+      }
 
-    .switch__label:before {
-      background-color: #A9A9A9;
-      border: 1px solid #2c2c2c;
-      border-radius: 6px;
-      content: '';
-      display: block;
-      height: 10px;
-      left: 8px;
-      position: absolute;
-      top: 10px;
-      transition: background-color 0 0.2s;
-      width: 22px;
-    }
+      .shuffle-icon {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
 
-    .switch__label:after {
-      background-color: white;
-      border: 1px solid white;
-      border-radius: 50%;
-      content: '';
-      display: block;
-      height: 10px;
-      left: 8px;
-      position: absolute;
-      top: 10px;
-      transition: transform 0.2s;
-      width: 10px;
-    }
+      .randomise-position {
+        position: relative;
+        font-weight: 500;
+        display: inline-block;
+      }
 
-    .switch__label {
-      align-items: center;
-      color: #fafafa;
-      display: flex;
-      font-family: var(--font-stack);
-      font-size: var(--font-size-xsmall);
-      font-weight: var(--font-weight-normal);
-      height: 100%;
-      letter-spacing: var(--font-letter-spacing-pos-xsmall);
-      line-height: var(--font-line-height);
-      margin-left: -22px;
-      padding: 0 var(--size-xsmall) 0 calc(var(--size-xlarge) - 2px);
-      user-select: none;
-      order: 1; 
+      .randomise-position-wrapper,
+      .shuffle-parent {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      .shuffle-parent {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--gap-md);
+      }
+
+      .frame-child {
+        cursor: pointer;
+        position: relative;
+        width: 28px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      .frame-div {
+        align-self: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .randomise-size {
+        cursor: pointer;
+        position: relative;
+        font-weight: 500;
+        display: inline-block;
+      }
+
+      .frame-container {
+        width: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 16px;
+      }
+
+      .randomise {
+        position: relative;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: var(--font-plus-jakarta-sans);
+        color: var(--gray-6);
+        text-align: left;
+        display: inline-block;
+      }
+
+      .randomise-wrapper {
+        cursor: pointer;
+        border: 0;
+        padding: 0;
+        background-color: var(--blue-2);
+        align-self: stretch;
+        border-radius: 32px;
+        height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .fof-kochi-icon {
+        position: relative;
+        width: 54px;
+        height: 49px;
+        flex-shrink: 0;
+      }
+
+      .frame-parent2 {
+        align-self: stretch;
+        align-items: center;
+        gap: var(--gap-md);
+      }
+
+      .frame-group,
+      .frame-parent,
+      .frame-parent2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .frame-group {
+        align-items: center;
+        gap: 24px;
+      }
+
+      .frame-parent {
+        display: flex;
+        position: relative;
+        background-color: #2c2c2c;
+        width: 100%;
+        overflow: hidden;
+        padding: 24px 24px;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        font-size: var(--font-size-base);
+        color: var(--color-gray-100);
+        font-family: var(--font-plus-jakarta-sans);
+      }
+      .fof-kochi-holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #A1A6AD;
+        margin-top: 16px;
+        gap: 2px;
+        font-weight: 400;
+        font-size: 12px;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 32px;
+        height: 18px;
+      }
+
+      /* Hide default HTML checkbox */
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* The slider */
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #4F4F4F;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background-color: #2D9CDB;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2D9CDB;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(14px);
+        -ms-transform: translateX(14px);
+        transform: translateX(14px);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="frame-parent">
+      <div class="frame-group">
+        <div class="frame-container">
+          <div class="frame-div">
+            <div class="shuffle-parent">
+              <img class="shuffle-icon" alt="" src="assets/images/shuffle.svg" /><label class="randomise-position-wrapper">
+                <div class="randomise-position">Position</div>
+              </label>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="position-checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="frame-div">
+            <div class="shuffle-parent">
+              <img class="shuffle-icon" alt="" src="assets/images/expand.svg" />
+              <div class="randomise-position-wrapper">
+                <label class="randomise-size">Size</label>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="size-checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <div class="frame-parent2">
+          <button class="randomise-wrapper" id="randomise">
+            <div class="randomise">Randomise</div>
+          </button>
+          <div class="fof-kochi-holder">
+            <span class="made-by">Made by</span>
+            <img class="fof-kochi-icon" alt="" src="assets/images/fof-kochi.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    var checkBox = document.getElementById("position-checkbox");
+    document.getElementById('randomise').onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'randomise', isChecked: checkBox.checked } }, '*')
     }
-  </style>
-</head>
-<div class="container">
-  <div class="header">
-    <div class="type type--large type--medium type--inverse">Randomiser</div>
-  </div>
-  <div class="switch">
-    <input class="switch__toggle" type="checkbox" id="uniqueId">
-    <label class="switch__label type" for="uniqueId">Limit in Frame</label>
-  </div>
-  <button class='button button--primary' id="randomise">Randomise</button>
-</div>
-<script>
-  var checkBox = document.getElementById("uniqueId");
-  document.getElementById('randomise').onclick = () => {
-    parent.postMessage({ pluginMessage: { type: 'randomise', isChecked: checkBox.checked } }, '*')
-  }
-</script>
+  </script>
+</html>
