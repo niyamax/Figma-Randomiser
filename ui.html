@@ -109,8 +109,8 @@
 
       .fof-kochi-icon {
         position: relative;
-        width: 54px;
-        height: 49px;
+        width: 48px;
+        height: 44px;
         flex-shrink: 0;
       }
 
@@ -267,9 +267,10 @@
   </body>
 
   <script>
-    var checkBox = document.getElementById("position-checkbox");
+    var positionEnabled = document.getElementById("position-checkbox");
+    var sizeEnabled = document.getElementById("size-checkbox");
     document.getElementById('randomise').onclick = () => {
-      parent.postMessage({ pluginMessage: { type: 'randomise', isChecked: checkBox.checked } }, '*')
+      parent.postMessage({ pluginMessage: { type: 'randomise', positionEnabled: positionEnabled.checked, sizeEnabled: sizeEnabled.checked} }, '*')
     }
   </script>
 </html>

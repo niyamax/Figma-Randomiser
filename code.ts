@@ -1,25 +1,23 @@
 figma.showUI(__html__);
-figma.ui.resize(308, 250);
+figma.ui.resize(308, 248);
 figma.ui.onmessage = (msg) => {
   if (msg.type === "randomise") {
-    const isChecked = msg.isChecked;
-  
+    const isPositionEnbaled = msg.positionEnabled;
+    const isSizeEnabled = msg.sizeEnabled;
     try {
       const frame: FrameNode = figma.currentPage.selection[0] as FrameNode;
       if (frame.type == "FRAME") {
         const children = frame.children;
         for (const child of children) {
-          //resizeChild(child, frame.width);
-          if(isChecked)
-            {
-              child.x = Math.max(0, Math.min(Math.random() * frame.width, frame.width - child.width));
-              child.y = Math.max(0, Math.min(Math.random() * frame.height, frame.height - child.height));
-            }
-          else
-            {
-              child.x = Math.random() * frame.width;
-              child.y = Math.random() * frame.height;
-            }
+          if (isPositionEnbaled) {
+            randomisePosition(child, frame);
+          }
+          if (isSizeEnabled) {
+            resizeChild(child, frame);
+          }
+          if(!isPositionEnbaled && !isSizeEnabled){
+            figma.notify("Enable size or position to randomise");
+          }
         }
         frame.resizeWithoutConstraints(frame.width, frame.height);
       } else {
@@ -36,7 +34,17 @@ figma.ui.onmessage = (msg) => {
   if (msg.type === "close") {
     figma.closePlugin();
   }
-  function resizeChild(child: SceneNode, frameWidth: number) {
+  function randomisePosition(child: SceneNode, frame: FrameNode) {
+    child.x = Math.max(
+      0,
+      Math.min(Math.random() * frame.width, frame.width - child.width)
+    );
+    child.y = Math.max(
+      0,
+      Math.min(Math.random() * frame.height, frame.height - child.height)
+    );
+  }
+  function resizeChild(child: SceneNode, frame: FrameNode) {
     if (
       child.type == "BOOLEAN_OPERATION" ||
       child.type == "COMPONENT" ||
@@ -57,8 +65,8 @@ figma.ui.onmessage = (msg) => {
       child.type == "WASHI_TAPE"
     ) {
       child.resize(
-        (child.width !=0 ? Math.random() * frameWidth : 0) / 4,
-        (child.height !=0 ? Math.random() * frameWidth : 0) / 4
+        (child.width != 0 ? Math.random() * frame.width : 0) / 4,
+        (child.height != 0 ? Math.random() * frame.width : 0) / 4
       );
     }
   }
