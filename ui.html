@@ -1,88 +1,276 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
-<div class="container">
-  <div class="type type--xlarge type--medium type--inverse">Randomiser</div>
-<!-- <input type="checkbox" id="position" name="position">
-<label for="position"> Randomise Position </label><br><br> -->
-<button class='button button--primary' id="randomise">Randomise</button>
-<!-- <a href="#" target="blank" id="close">Close</a> -->
-</div>
-<script>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
+    <style>
+      :root {
+        /* fonts */
+        --font-plus-jakarta-sans: "Plus Jakarta Sans";
 
-document.getElementById('randomise').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'randomise' } }, '*')
-}
-document.getElementById('close').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'close' } }, '*')
-}
-</script>
-<style>
-  .container {
-    width: 100vw;
-    height: 100vh;
-    row-gap: 16px;
-    display: grid;
-    justify-items: center;
-    align-content: center;
-    background-color: #2c2c2c;
-  }
-  button:hover {
-			color: #ffffff;
-			background-color: #0E78BD;
-		}
-  .type{
-    color: #fafafa;
-  }
-</style>
-<!-- <style>
-  input[type="checkbox"] {
-    display: inline-block;
-    margin: 0 0.5em 0 0;
-    width: 2em;
-    height: 2em;
-    vertical-align: middle;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
+        /* font sizes */
+        --font-size-base: 14px;
 
-  label {
-    display: inline-block;
-    margin: 0 0.5em 0 0;
-    font-size: 1em;
-    font-weight: normal;
-    vertical-align: middle;
-  }
+        /* Colors */
+        --color-gray-100: #fafafa;
+        --gray-6: #f2f2f2;
+        --blue-2: #2d9cdb;
 
-  a:link {
-  color: #212121;
-  text-decoration: none;
-}
-.container {
-    width: 100vw;
-    height: 100vh;
-    row-gap: 16px;
-    display: grid;
-    justify-items: center;
-    align-content: center;
-    font-family: 'Poppins', sans-serif;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  button {
-			color: #ffffff;
-			background-color: #2d63c8;
-			font-size: 16px;
-			border: 0px solid #2d63c8;
-			border-radius: 200px;
-			padding: 12px 24px;
-			cursor: pointer
-		}
-		button:hover {
-			color: #ffffff;
-			background-color: #143f94;
-		}
-</style> -->
+        /* Gaps */
+        --gap-md: 12px;
+      }
+
+      body {
+        margin: 0;
+        line-height: normal;
+      }
+
+      .shuffle-icon {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      .randomise-position {
+        position: relative;
+        font-weight: 500;
+        display: inline-block;
+      }
+
+      .randomise-position-wrapper,
+      .shuffle-parent {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      .shuffle-parent {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--gap-md);
+      }
+
+      .frame-child {
+        cursor: pointer;
+        position: relative;
+        width: 28px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      .frame-div {
+        align-self: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .randomise-size {
+        cursor: pointer;
+        position: relative;
+        font-weight: 500;
+        display: inline-block;
+      }
+
+      .frame-container {
+        width: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 16px;
+      }
+
+      .randomise {
+        position: relative;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: var(--font-plus-jakarta-sans);
+        color: var(--gray-6);
+        text-align: left;
+        display: inline-block;
+      }
+
+      .randomise-wrapper {
+        cursor: pointer;
+        border: 0;
+        padding: 0;
+        background-color: var(--blue-2);
+        align-self: stretch;
+        border-radius: 32px;
+        height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .fof-kochi-icon {
+        position: relative;
+        width: 48px;
+        height: 44px;
+        flex-shrink: 0;
+      }
+
+      .frame-parent2 {
+        align-self: stretch;
+        align-items: center;
+        gap: var(--gap-md);
+      }
+
+      .frame-group,
+      .frame-parent,
+      .frame-parent2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .frame-group {
+        align-items: center;
+        gap: 24px;
+      }
+
+      .frame-parent {
+        display: flex;
+        position: relative;
+        background-color: #2c2c2c;
+        width: 100%;
+        overflow: hidden;
+        padding: 24px 24px 18px 24px;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        font-size: var(--font-size-base);
+        color: var(--color-gray-100);
+        font-family: var(--font-plus-jakarta-sans);
+      }
+      .fof-kochi-holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #A1A6AD;
+        margin-top: 16px;
+        gap: 2px;
+        font-weight: 400;
+        font-size: 12px;
+        opacity: 0.55;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 32px;
+        height: 18px;
+      }
+
+      /* Hide default HTML checkbox */
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* The slider */
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #4F4F4F;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background-color: #2D9CDB;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2D9CDB;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(14px);
+        -ms-transform: translateX(14px);
+        transform: translateX(14px);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="frame-parent">
+      <div class="frame-group">
+        <div class="frame-container">
+          <div class="frame-div">
+            <div class="shuffle-parent">
+              <img class="shuffle-icon" alt="" src="https://raw.githubusercontent.com/niyamax/Figma-Randomsier/ui-changes/assets/position_icon.svg" /><label class="randomise-position-wrapper">
+                <div class="randomise-position">Position</div>
+              </label>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="position-checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="frame-div">
+            <div class="shuffle-parent">
+              <img class="shuffle-icon" alt="" src="https://raw.githubusercontent.com/niyamax/Figma-Randomsier/ui-changes/assets/size_icon.svg" />
+              <div class="randomise-position-wrapper">
+                <label class="randomise-size">Size</label>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="size-checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <div class="frame-parent2">
+          <button class="randomise-wrapper" id="randomise">
+            <div class="randomise">Randomise</div>
+          </button>
+          <div class="fof-kochi-holder">
+            <span class="made-by">Made by</span>
+            <img class="fof-kochi-icon" alt="" src="https://raw.githubusercontent.com/niyamax/Figma-Randomsier/ui-changes/assets/fof_kochi.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    var positionEnabled = document.getElementById("position-checkbox");
+    var sizeEnabled = document.getElementById("size-checkbox");
+    document.getElementById('randomise').onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'randomise', positionEnabled: positionEnabled.checked, sizeEnabled: sizeEnabled.checked} }, '*')
+    }
+  </script>
+</html>
