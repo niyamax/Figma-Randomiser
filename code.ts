@@ -1,5 +1,5 @@
 figma.showUI(__html__);
-figma.ui.resize(300, 200);
+figma.ui.resize(308, 250);
 figma.ui.onmessage = (msg) => {
   if (msg.type === "randomise") {
     const isChecked = msg.isChecked;
