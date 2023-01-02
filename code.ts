@@ -64,9 +64,11 @@ figma.ui.onmessage = (msg) => {
       child.type == "VECTOR" ||
       child.type == "WASHI_TAPE"
     ) {
+      const newWidth = (Math.random() * frame.width) / 4;
+      const newHeight = (newWidth * child.height) / child.width;
       child.resize(
-        (child.width != 0 ? Math.random() * frame.width : 0) / 4,
-        (child.height != 0 ? Math.random() * frame.width : 0) / 4
+        child.width != 0 ? newWidth : 0,
+        child.height != 0 ? newHeight : 0
       );
     }
   }
