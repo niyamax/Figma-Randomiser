@@ -95,9 +95,9 @@ figma.ui.onmessage = (msg) => {
       child.type == "WASHI_TAPE"
     ) {
       const fills = clone(child.fills);
-      fills[0].color.r = parseFloat((Math.random() * (1 - 0)).toFixed(1));
-      fills[0].color.g = parseFloat((Math.random() * (1 - 0)).toFixed(1));
-      fills[0].color.b = parseFloat((Math.random() * (1 - 0)).toFixed(1));
+      fills[0].color.r = parseFloat(Math.random().toFixed(1));
+      fills[0].color.g = parseFloat(Math.random().toFixed(1));
+      fills[0].color.b = parseFloat(Math.random().toFixed(1));
       child.fills = fills;
     }
 
