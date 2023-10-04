@@ -1,3 +1,8 @@
+# About Plugin
+Randomiser is a Figma plugin that elevates design exploration by effortlessly introducing randomness to size, position, and color of the design elements. 
+
+[Randomiser - Figma Community](https://www.figma.com/community/plugin/1189284785668093844/randomiser)
+
 # Setting up the Plugin
 
 Follow these steps to get the plugin running on your machine:
