@@ -1,10 +1,13 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet">
+   <style>
       :root {
         /* fonts */
-        --font-plus-jakarta-sans: "Plus Jakarta Sans";
+        /* --font-plus-jakarta-sans: "Plus Jakarta Sans"; */
+        --font-plus-jakarta-sans: "Urbanist", sans-serif;
+
 
         /* font sizes */
         --font-size-base: 14px;
@@ -81,6 +84,7 @@
         align-items: flex-start;
         justify-content: flex-start;
         gap: 16px;
+        margin-top: 10px; 
       }
 
       .randomise {
@@ -266,6 +270,19 @@
               <span class="slider round"></span>
             </label>
           </div>
+          <!-- Shape Randomise -->
+        <div class="frame-div">
+          <div class="shuffle-parent">
+            <img class="shuffle-icon" alt="" src="./assets/compass.svg" />
+            <div class="randomise-position-wrapper">
+              <label class="randomise-size">Shape</label>
+            </div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="shape-checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div>
         </div>
         <div class="frame-parent2">
           <button class="randomise-wrapper" id="randomise">
@@ -284,8 +301,9 @@
     var positionEnabled = document.getElementById("position-checkbox");
     var sizeEnabled = document.getElementById("size-checkbox");
     var colorEnabled = document.getElementById("color-checkbox");
+    var shapeEnabled = document.getElementById("shape-checkbox");
     document.getElementById('randomise').onclick = () => {
-      parent.postMessage({ pluginMessage: { type: 'randomise', positionEnabled: positionEnabled.checked, sizeEnabled: sizeEnabled.checked, colorEnabled: colorEnabled.checked} }, '*')
+      parent.postMessage({ pluginMessage: { type: 'randomise', positionEnabled: positionEnabled.checked, sizeEnabled: sizeEnabled.checked, colorEnabled: colorEnabled.checked, shapeEnabled: shapeEnabled.checked} }, '*')
     }
   </script>
 </html>
