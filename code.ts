@@ -1,5 +1,6 @@
 figma.showUI(__html__);
 figma.ui.resize(308, 282);
+const notifiedErrors = new Set<string>(); 
 figma.ui.onmessage = (msg) => {
   if (msg.type === "randomise") {
     const isPositionEnbaled = msg.positionEnabled;
@@ -20,7 +21,7 @@ figma.ui.onmessage = (msg) => {
             colorChange(child);
           }
           if (!isPositionEnbaled && !isSizeEnabled && !isColorEnabled) {
-            figma.notify("Enable size or position to randomise");
+            figma.notify("Enable any property to randomise");
           }
         }
         frame.resizeWithoutConstraints(frame.width, frame.height);
@@ -28,13 +29,9 @@ figma.ui.onmessage = (msg) => {
         figma.notify("Selection is not a frame");
       }
     } catch (error) {
-      if (error instanceof TypeError) {
-        figma.notify("Selection is not a frame");
-      } else {
-        throw error;
+      handleError(error, notifiedErrors);
       }
     }
-  }
   if (msg.type === "close") {
     figma.closePlugin();
   }
@@ -103,6 +100,25 @@ figma.ui.onmessage = (msg) => {
 
     function clone(val: readonly Paint[] | typeof figma.mixed) {
       return JSON.parse(JSON.stringify(val));
+    }
+  }
+  function handleError(error: unknown, notifiedErrors: Set<string>) {
+    if (error instanceof TypeError) {
+      if (error.message.includes("color")) {
+        notifyOnce("One or more shapes have no fill color", notifiedErrors);
+      } else if (error.message.includes("frame")) {
+        notifyOnce("Selection is not a frame", notifiedErrors);
+      } else {
+        notifyOnce("Something went wrong: " + error.message, notifiedErrors);
+      }
+    } else {
+      throw error;
+    }
+  }
+  function notifyOnce(message: string, notifiedErrors: Set<string>) {
+    if (!notifiedErrors.has(message)) {
+      figma.notify(message);
+      notifiedErrors.add(message);
     }
   }
 };
